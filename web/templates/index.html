@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics Dashboard Agent</title>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<header>
+  <h1>Analytics Dashboard Agent</h1>
+  <span>Powered by Claude + Salesforce</span>
+</header>
+
+<div class="layout">
+
+  <!-- ── Left panel ── -->
+  <aside class="left-panel">
+
+    <!-- Chat history -->
+    <div class="chat-history" id="chat-history">
+      <div class="chat-history-empty">Your prompts will appear here.</div>
+    </div>
+
+    <!-- Agent activity log -->
+    <details class="activity-section" open>
+      <summary>Agent Activity</summary>
+      <div class="activity-log" id="activity-log"></div>
+    </details>
+
+    <!-- Prompt input -->
+    <div class="prompt-area">
+      <textarea
+        id="prompt-input"
+        placeholder="Ask anything — e.g. &quot;Show Q4 pipeline by sales rep&quot;"
+        rows="3"
+      ></textarea>
+      <div class="prompt-row">
+        <span class="prompt-hint">⌘↵ to send</span>
+        <button class="send-btn" id="send-btn" onclick="generateDashboard()">Generate</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── Right panel ── -->
+  <main class="right-panel">
+
+    <!-- Generating indicator -->
+    <div class="generating-bar" id="generating-bar">
+      <div class="spinner"></div>
+      <span>Agent is reasoning and querying Salesforce…</span>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="empty-state">
+      <div class="es-icon">📊</div>
+      <p>Enter a prompt to generate your first dashboard.</p>
+    </div>
+
+    <!-- Charts -->
+    <section class="dashboard-section" id="charts-section">
+      <div class="section-title">Visualizations</div>
+      <div class="charts-grid" id="charts-grid"></div>
+    </section>
+
+    <!-- Insights -->
+    <section class="dashboard-section" id="insights-section">
+      <div class="section-title">Action-Oriented Insights</div>
+      <div class="insights-grid" id="insights-grid"></div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
