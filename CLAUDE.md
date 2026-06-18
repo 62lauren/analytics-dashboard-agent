@@ -4,7 +4,7 @@ A conversational analytics agent that accepts plain English prompts, autonomousl
 
 ## Stack
 
-- **LLM**: Claude Opus 4.8 (`claude-opus-4-8`) with adaptive thinking — never downgrade to Sonnet or Haiku
+- **LLM**: Claude Sonnet 4.6 (`claude-sonnet-4-6`) with adaptive thinking
 - **Web framework**: FastAPI + Jinja2 + SSE (Server-Sent Events)
 - **Charts**: Plotly (Python generates figure dicts → Plotly.js renders in browser)
 - **Data source**: Salesforce REST API via `simple-salesforce`
@@ -22,7 +22,7 @@ FastAPI (main.py)
   └── DashboardAgent (agent/dashboard_agent.py)
         ├── SessionManager — loads/saves conversation history per session_id
         ├── AsyncAnthropic — streaming agentic loop with tool use
-        │     thinking={"type": "adaptive"}, model="claude-opus-4-8"
+        │     thinking={"type": "adaptive"}, model="claude-sonnet-4-6"
         └── execute_tool() (agent/tools.py)
               ├── SalesforceClient (salesforce/client.py) — via asyncio.to_thread
               └── build_chart() (charts/plotly_builder.py)
@@ -84,7 +84,7 @@ Newer Salesforce orgs disable SOAP API login by default. The app uses OAuth 2.0 
 - **Conversation memory**: `SessionManager` stores the full `messages` list (including Claude's thinking blocks and tool results) per session. This lets Claude say "filter that by Q4" on a follow-up without re-discovering Salesforce objects.
 - **Async Salesforce**: `simple-salesforce` is synchronous — all SF calls go through `asyncio.to_thread()` to avoid blocking FastAPI's event loop.
 - **SSE over WebSockets**: SSE is unidirectional (server → browser), matching the request/stream pattern exactly. `EventSource` doesn't support POST, so the browser uses `fetch` + `ReadableStream`.
-- **Adaptive thinking only**: `claude-opus-4-8` only accepts `thinking={"type": "adaptive"}`. Do not add `budget_tokens`, `"enabled"`, `"disabled"`, `temperature`, `top_p`, or `top_k` — all rejected with HTTP 400.
+- **Adaptive thinking only**: `claude-sonnet-4-6` only accepts `thinking={"type": "adaptive"}`. Do not add `budget_tokens`, `"enabled"`, `"disabled"`, `temperature`, `top_p`, or `top_k` — all rejected with HTTP 400.
 
 ## File Map
 

@@ -11,7 +11,7 @@ from salesforce.client import SalesforceClient
 
 
 class DashboardAgent:
-    MODEL = "claude-opus-4-8"
+    MODEL = "claude-sonnet-4-6"
     MAX_TOKENS = 8192
     MAX_TURNS = 20
 
